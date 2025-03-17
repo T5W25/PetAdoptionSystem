@@ -1,9 +1,7 @@
-import Link from 'next/link';
+import PetList from './pet-list/page';
 
 export default function Home() {
   return (
-      <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-        <li><Link href="/about">About</Link></li>
-      </ol>
+      <PetList />
   );
 }
