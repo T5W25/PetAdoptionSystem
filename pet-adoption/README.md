@@ -1,7 +1,55 @@
-1. cp env.example .env
-- fill the API KEY
 
-2. npx prisma db push
-3. npx prisma generate
+# Local Installation Tutorial 
 
-4. npm run dev          
+This documentation is to explain how to set up the project for local development.
+
+## Prerequisites
+Ensure you have the following installed:
+
+- Node.js (LTS recommended)
+- npm or Yarn
+
+If it's not installed follow the tutorial of how to install them:
+
+- Node.js and npm: https://www.geeksforgeeks.org/how-to-download-and-install-node-js-and-npm/
+- Yarn (optional): https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable
+
+
+## npm Installation Dependencies
+
+Once you open the project, open a terminal and navigate to the project directory:
+
+- cd C:\\[your-folders-path]\PetAdoptionSystem\pet-adoption
+
+Now that you are on the project directory, run the following commands (Run them one at a time):
+
+- npm i 
+    - (This is to install node-modules required for the project)
+
+- npx prisma db push 
+    - (This is to push the DB to the server)
+
+- npx prisma generate 
+    - (we use prisma for our DB)
+
+
+# Environment Variables
+
+Create a new file called `.env` in the root directory of the project and copy the following content: 
+
+```env
+DATABASE_URL="postgresql://user:password@localhost:5432/dbname" # Change this to our database url 
+API_KEY=zrIlC3PXwyRflWWrzr5DspswYINSmAMq8Z0sVOD00hgo93fJzJ
+API_SECRET=f1Y4cMVbi1CHhBaS1CQ2BjMmrWNO9BOWxVqHIowq
+ACCESS_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiJ6cklsQzNQWHd5UmZsV1dyenI1RHNwc3dZSU5TbUFNcThaMHNWT0QwMGhnbzkzZkp6SiIsImp0aSI6IjI2Y2E1OWVmNWNiOGQ3OTM5MmE2ZTJlMDQ4MzI2ZGEzZTQwNGVkZjU5YzQ1MzM2MjFjOWMxM2U3MzIyMWVmNWYwZmU3NGI3ZjRiOGJjOGUxIiwiaWF0IjoxNzQyMjI4MTE5LCJuYmYiOjE3NDIyMjgxMTksImV4cCI6MTc0MjIzMTcxOSwic3ViIjoiIiwic2NvcGVzIjpbXX0.D5vIkN6zCWV4ynyUw555Ry_HQnkYFxD4sgDcTHzUybCXoUWxD5raC4TBzaEJibV7OvfwMrI4ar12xCT1DYbsLyC81NrdaSV8JhGYNdNjWVVAKK3c3yM7uLxmg--Qa8DOt3_y_dN9fqNYfwUYgp93oE1L4BhjX-veEgDSYs22bKYIIT1AhjRxeUXqRDK6tdvb7tAP_47IfK7ZwvRjYTDe_icfFY6Na9yyyaDPf6rj3sJSOp1cNIoEKHavaAx6RB3m4XTO2cPS4CStzLThdBJ0iF6uflllBfTBhTzo3yhMUTqGZ-2dOpc4gy3ovz7VlKCNy093EY6Unkgdr597Uo9sNg
+
+
+## Run in Local
+
+Now that you have installed the dependencies, run the following command to run the project locally: 
+
+- npm run dev
+
+This command will start the project and generate a "Localhost" link, click on it and it will open a web tab where you can see the web app and all the changes you make on the project.
+
+Now you are ready to start working on the project.
