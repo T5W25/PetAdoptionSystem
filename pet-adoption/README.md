@@ -44,12 +44,6 @@ API_SECRET=f1Y4cMVbi1CHhBaS1CQ2BjMmrWNO9BOWxVqHIowq
 
 ```
 
-> [!CAUTION]
-> ACCESS_TOKE may expire and send a 401 response, if that happens, open cmd and run the following command:
->
->curl -d "grant_type=client_credentials&client_id=zrIlC3PXwyRflWWrzr5DspswYINSmAMq8Z0sVOD00hgo93fJzJ&client_secret=f1Y4cMVbi1CHhBaS1CQ2BjMmrWNO9BOWxVqHIowq" https://api.petfinder.com/v2/oauth2/token
->
->then copy the new ACCESS_TOKEN and paste it in the .env file.
 
 ## Run in Local
 
