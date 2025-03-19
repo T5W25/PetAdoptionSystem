@@ -32,7 +32,8 @@ Now that you are on the project directory, run the following commands (Run them 
 - npx prisma generate 
     - (we use prisma for our DB)
 
-
+- openssl rand -base64 32
+    - （generate your JWT secret)
 # Environment Variables
 
 Create a new file called `.env` in the root directory of the project and copy the following content: 
@@ -41,7 +42,7 @@ Create a new file called `.env` in the root directory of the project and copy th
 DATABASE_URL='postgresql://neondb_owner:npg_arNhxA8mFIQ0@ep-curly-darkness-a81arwqc-pooler.eastus2.azure.neon.tech/neondb?sslmode=require'
 API_KEY=zrIlC3PXwyRflWWrzr5DspswYINSmAMq8Z0sVOD00hgo93fJzJ
 API_SECRET=f1Y4cMVbi1CHhBaS1CQ2BjMmrWNO9BOWxVqHIowq
-
+JWT_SECRET='your jwt secret'
 ```
 
 
