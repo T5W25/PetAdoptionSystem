@@ -26,13 +26,11 @@ Now that you are on the project directory, run the following commands (Run them 
 - npm i 
     - (This is to install node-modules required for the project)
 
-- npx prisma db push 
-    - (This is to push the DB to the server)
-
 - npx prisma generate 
     - (we use prisma for our DB)
 
-
+- openssl rand -base64 32
+    - （generate your JWT secret)
 # Environment Variables
 
 Create a new file called `.env` in the root directory of the project and copy the following content: 
@@ -41,16 +39,9 @@ Create a new file called `.env` in the root directory of the project and copy th
 DATABASE_URL='postgresql://neondb_owner:npg_arNhxA8mFIQ0@ep-curly-darkness-a81arwqc-pooler.eastus2.azure.neon.tech/neondb?sslmode=require'
 API_KEY=zrIlC3PXwyRflWWrzr5DspswYINSmAMq8Z0sVOD00hgo93fJzJ
 API_SECRET=f1Y4cMVbi1CHhBaS1CQ2BjMmrWNO9BOWxVqHIowq
-ACCESS_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiJ6cklsQzNQWHd5UmZsV1dyenI1RHNwc3dZSU5TbUFNcThaMHNWT0QwMGhnbzkzZkp6SiIsImp0aSI6ImUyNWNjZjI1NmIwOTNiMzEzYzhiNTQ0YjViMzcwZGI4NDZiOGI1NDRjMDhjNDk0ZThlNWQ5NzMxYTgyZWE1NDkxZDY2ZDYxYzE0M2M1MWM5IiwiaWF0IjoxNzQyMzA4NzI4LCJuYmYiOjE3NDIzMDg3MjgsImV4cCI6MTc0MjMxMjMyOCwic3ViIjoiIiwic2NvcGVzIjpbXX0.BFGYeCf7pUfGpTUI79RbcMytTcLbRhvtiZ11UOkztuKSdNtvKGsg02Fpynx5ujhtmpjCkopbHpIVzbH5qN0XOrHxtzbrcgSloJGq6WV-1xm_n_3oQz0tllZEvaiJZK_pGip4inJPzBPT_d93i3HhtLFdfxkw7YjiPHNAi5jhgPA2rXLNwm_U2vEy-AO2ZPQR0LxX6OZCf4zpt445Ij3hixoGWDIEjkPhPA1KuuMKyAC8LswIvN2FjPSUJ5ZMfQJ28eX3LKaivbXI4DgnmCSNGAKVoh8CuOwRCub5SW5KMbizoj0cx4G_nPFK3U-Q-84Jx82telB88dC-4z0FiCh94Q
-
-> [!CAUTION]
-> ACCESS_TOKE may expire and send a 401 response, if that happens, open cmd and run the following command:
-
-curl -d "grant_type=client_credentials&client_id=zrIlC3PXwyRflWWrzr5DspswYINSmAMq8Z0sVOD00hgo93fJzJ&client_secret=f1Y4cMVbi1CHhBaS1CQ2BjMmrWNO9BOWxVqHIowq" https://api.petfinder.com/v2/oauth2/token
-
-then copy the new ACCESS_TOKEN and paste it in the .env file.
-
+JWT_SECRET='your jwt secret'
 ```
+
 
 ## Run in Local
 

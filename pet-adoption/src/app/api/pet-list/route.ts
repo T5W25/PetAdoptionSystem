@@ -1,23 +1,14 @@
-import { NextResponse } from "next/server";
+import { apiGET } from "@/lib/apiHelper";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   const apiUrl = "https://api.petfinder.com/v2/animals";
-  const accessToken = process.env.ACCESS_TOKEN; 
 
   try {
-    const response = await fetch(apiUrl, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/json",
-      },
-    });
 
-    if (!response.ok) {
-      return NextResponse.json({ error: "Failed to fetch data" }, { status: response.status });
-    }
+    //this will wait the response from the apiGET function and parse it to json
+    const data = await apiGET(req, apiUrl).then((res: any) => res.json());
 
-    const data = await response.json();
     return NextResponse.json(data);
   } catch (error) {
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
