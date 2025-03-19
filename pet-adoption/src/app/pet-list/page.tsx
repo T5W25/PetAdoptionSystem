@@ -38,7 +38,7 @@ export default function PetList() {
 
   return (
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px', padding: '20px' }}>
-      {pets.map((pet) => (
+      {pets?.map((pet) => (
         <Card key={pet.id} shadow="sm" padding="lg" radius="md" withBorder>
           <Card.Section>
             <Image src={pet.primary_photo_cropped?.small || '/pet-placeholder.png'} height={160} alt={pet.name} />
