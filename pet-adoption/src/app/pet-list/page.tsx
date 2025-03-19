@@ -21,7 +21,7 @@ export default function PetList() {
   useEffect(() => {
     async function fetchPets() {
       try {
-        const response = await fetch('/api/pet-list'); // Ensure you have this API route
+        const response = await fetch('/api/pet-list'); 
         const data = await response.json();
         console.log(data);
         setPets(data.animals);
