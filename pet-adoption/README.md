@@ -26,9 +26,6 @@ Now that you are on the project directory, run the following commands (Run them 
 - npm i 
     - (This is to install node-modules required for the project)
 
-- npx prisma db push 
-    - (This is to push the DB to the server)
-
 - npx prisma generate 
     - (we use prisma for our DB)
 
