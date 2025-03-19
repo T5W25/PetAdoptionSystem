@@ -1,11 +1,12 @@
 .navbar {
-    height: 700px;
+    height: 100%;
     width: 300px;
     padding: 20px;
     display: flex;
     flex-direction: column;
     border-right: 2px solid #b3ffcc;
     background-color: #fdfdfd;
+	position: fixed;
 }
 
 .navbarMain {

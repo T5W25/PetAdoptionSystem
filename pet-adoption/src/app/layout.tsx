@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { MantineProvider } from "@mantine/core";
-import Navbar from '../components/Navbar';
+import Navbar from '../components/Navbar/Navbar';
 import Footer from '../components/Footer';
 
 const geistSans = Geist({
@@ -30,7 +30,9 @@ export default function RootLayout({
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <MantineProvider>
             <Navbar />
-            <main>{children}</main>
+                <main style={{ paddingLeft: "300px" }}>
+                    {children}
+                </main>
             <Footer />
         </MantineProvider>
         </body>

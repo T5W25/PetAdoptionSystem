@@ -37,7 +37,7 @@ export default function PetList() {
   if (loading) return <Text>Loading...</Text>;
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px', padding: '20px' }}>
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', width: '100%', gap: '20px', border: 'solid red 1px'}}>
       {pets?.map((pet) => (
         <Card key={pet.id} shadow="sm" padding="lg" radius="md" withBorder>
           <Card.Section>
