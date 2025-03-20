@@ -2,6 +2,7 @@
 
 import { useParams } from "next/navigation";
 import Card from "./components/Card/Card"
+import { Text, } from '@mantine/core';
 
 import "./styles.css";
 import { Fragment, use, useEffect, useState } from "react";
@@ -30,6 +31,7 @@ const PageDetails: React.FC = () => {
 
     const { id } = useParams();
     const [pet, setPet] = useState<Pet>();
+    const [loading, setLoading] = useState<boolean>(true);
 
     if (!id) {
         return <div>Missing ID</div>;
@@ -39,10 +41,19 @@ const PageDetails: React.FC = () => {
 
     useEffect(() => {
         fetch(`/api/pet-list/${id}`)
-            .then((res) => res.json())
-            .then((data) => setPet(data));
+            .then((response) => response.json())
+            .then((data) => {
+                setPet(data);
+                setLoading(false);
+            }
+            )
+            .catch((error) => {
+                console.error('Error fetching pet:', error);
+            }
+            )
     }, [id]);
 
+    if (loading) return <Text>Loading...</Text>;
 
     return (
         <div className="pet-details">
