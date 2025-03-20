@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Card, Image, Text, Badge, Group, Button } from '@mantine/core';
+import { useRouter } from 'next/navigation';
 
 interface Pet {
   id: number;
@@ -15,13 +16,15 @@ interface Pet {
 }
 
 export default function PetList() {
+  const router = useRouter();
+
   const [pets, setPets] = useState<Pet[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     async function fetchPets() {
       try {
-        const response = await fetch('/api/pet-list'); 
+        const response = await fetch('/api/pet-list');
         const data = await response.json();
         console.log(data);
         setPets(data.animals);
@@ -37,7 +40,7 @@ export default function PetList() {
   if (loading) return <Text>Loading...</Text>;
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', width: '100%', gap: '20px', border: 'solid red 1px'}}>
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', width: '100%', gap: '20px', border: 'solid red 1px' }}>
       {pets?.map((pet) => (
         <Card key={pet.id} shadow="sm" padding="lg" radius="md" withBorder>
           <Card.Section>
@@ -52,7 +55,7 @@ export default function PetList() {
           <Text size="sm" color="dimmed">{pet.breeds.primary} - {pet.gender}</Text>
           <Text size="sm" mt="xs">Species: {pet.species}</Text>
 
-          <Button component="a" href={pet.url} target="_blank" fullWidth mt="md" radius="md">
+          <Button component="a" onClick={() => router.push(`/pet-list/${pet.id}`)} fullWidth mt="md" radius="md">
             View Profile
           </Button>
         </Card>
