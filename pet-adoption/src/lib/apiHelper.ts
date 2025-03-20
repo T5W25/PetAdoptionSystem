@@ -1,4 +1,3 @@
-
 import { NextRequest, NextResponse } from "next/server";
 
 export async function apiGET(req: NextRequest, endpoint: string, params?: Record<string, string>): Promise<NextResponse> {

@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 import {
   IconHome,
   IconVocabulary,
@@ -11,51 +12,43 @@ import {
 import { Code, Group } from '@mantine/core';
 import classes from './Navbar.module.css';
 
-const data = [
-  { link: '/', label: 'Home', icon: IconHome },
-  { link: 'about', label: 'About', icon: IconVocabulary },
+const navItems = [
+  { href: '/', label: 'Home', icon: IconHome },
+  { href: '/about', label: 'About', icon: IconVocabulary },
 ];
 
 export default function Navbar() {
-  const [active, setActive] = useState('Billing');
-
-  const links = data.map((item) => (
-    <a
-      className={classes.link}
-      data-active={item.label === active || undefined}
-      href={item.link}
-      key={item.label}
-      onClick={(event) => {
-        event.preventDefault();
-        setActive(item.label);
-      }}
-    >
-      <item.icon className={classes.linkIcon} stroke={1.5} />
-      <span>{item.label}</span>
-    </a>
-  ));
+  const pathname = usePathname();
 
   return (
-    <nav className={classes.navbar}>
-      <div className={classes.navbarMain}>
-        <Group className={classes.header}>
-          <IconDog size={28} />
-          <Code fw={700}>v0.0.1</Code>
-        </Group>
-        {links}
-      </div>
+      <nav className={classes.navbar}>
+        <div className={classes.navbarMain}>
+          <Group className={classes.header}>
+            <IconDog size={28} />
+            <Code fw={700}>v0.0.1</Code>
+          </Group>
 
-      <div className={classes.footer}>
-        <a href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
-          <IconLogin2 className={classes.linkIcon} stroke={1.5} />
-          <span>Login</span>
-        </a>
+          {navItems.map(({ href, label, icon: Icon }) => (
+              <Link key={label} href={href} className={`${classes.link} ${pathname === href ? classes.active : ''}`} prefetch={false}>
+                <Icon className={classes.linkIcon} stroke={1.5} />
+                <span>{label}</span>
+              </Link>
+          ))}
+        </div>
 
-        <a href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
-          <IconUserEdit className={classes.linkIcon} stroke={1.5} />
-          <span>Register</span>
-        </a>
-      </div>
-    </nav>
+        <div className={classes.footer}>
+          <Link href={'/auth/login'} className={classes.link} prefetch={false} target="_blank"
+                rel="noopener noreferrer">
+            <IconLogin2 className={classes.linkIcon} stroke={1.5} />
+            <span>Login</span>
+          </Link>
+
+          <Link href={'/auth/register'} className={classes.link} prefetch={false} target="_blank"
+                rel="noopener noreferrer">
+            <IconUserEdit className={classes.linkIcon} stroke={1.5} />
+            <span>Register</span>
+          </Link>
+        </div>
+      </nav>
   );
 }

@@ -5,7 +5,6 @@ export async function GET(req: NextRequest) {
   const apiUrl = "https://api.petfinder.com/v2/animals";
 
   try {
-
     //this will wait the response from the apiGET function and parse it to json
     const data = await apiGET(req, apiUrl).then((res: any) => res.json());
 

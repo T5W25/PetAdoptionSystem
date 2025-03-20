@@ -42,20 +42,18 @@ a:hover {
 }
 
 main {
-  min-height: calc(100vh - 140px); /* 假设导航栏和底部各占 70px */
+  min-height: calc(100vh - 140px); 
   max-width: var(--max-width);
   margin: 0 auto;
   padding: 2rem 1rem;
 }
 
-/* 响应式设计 */
 @media (max-width: 768px) {
   main {
     padding: 1.5rem 1rem;
   }
 }
 
-/* 通用布局类 */
 .container {
   width: 100%;
   max-width: var(--max-width);
@@ -83,7 +81,6 @@ main {
   gap: 1rem;
 }
 
-/* 通用组件样式 */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -132,7 +129,6 @@ main {
   box-shadow: 0 6px 12px var(--shadow-color);
 }
 
-/* 可能需要的导航栏和页脚样式 */
 nav, footer {
   width: 100%;
   background-color: var(--background-color);
