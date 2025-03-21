@@ -21,10 +21,12 @@ export default function PetList() {
   useEffect(() => {
     async function fetchPets() {
       try {
-        const response = await fetch('/api/pet-list'); // Ensure you have this API route
+        const response = await fetch('/api/pet-list');
         const data = await response.json();
-        console.log(data);
-        setPets(data.animals);
+        console.log('API Response:', data); // Debug the API response
+
+        // Ensure `data.animals` exists, otherwise default to an empty array
+        setPets(data.animals || []);
       } catch (error) {
         console.error('Error fetching pets:', error);
       } finally {
@@ -35,6 +37,10 @@ export default function PetList() {
   }, []);
 
   if (loading) return <Text>Loading...</Text>;
+
+  if (pets.length === 0) {
+    return <Text>No pets found.</Text>; // Show a message if no pets are found
+  }
 
   return (
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px', padding: '20px' }}>
