@@ -1,0 +1,88 @@
+.pet-details {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    grid-template-rows: 1fr auto auto;
+    grid-template-areas:
+        "image image"
+        "info adoption"
+        "info .";
+    padding: 20px;
+}
+
+.pet-image__card {
+    grid-area: image;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.pet-image__card img {
+    width: 600px;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.pet-details__info {
+    grid-area: info;
+}
+
+.pet-adoption__card {
+    grid-area: adoption;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 0;
+}
+
+.pet-adoption__card__content {
+    background-color: #bee25b;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    text-align: center;
+}
+
+.pet-adoption__card__content p {
+    font-size: 13px;
+    margin-bottom: 15px;
+}
+
+.pet-adoption__card__content button {
+    border-radius: 50px;
+    padding: 5px;
+    color: rgb(105, 88, 55);
+    background-color: transparent;
+    border: 1px solid rgb(105, 88, 55);
+}
+
+.pet-adoption__card__buttons {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: row;
+}
+
+.pet-adoption__card__buttons button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: #bee25b;
+    cursor: pointer;
+    color: rgb(105, 88, 55);
+}
+
+.pet-adoption__card__buttons button:first-child {
+    border-bottom-left-radius: 10px;
+    border-top: 1px solid black;
+    border-right: 1px solid black;
+}
+
+.pet-adoption__card__buttons button:last-child {
+    border-bottom-right-radius: 10px;
+    border-top: 1px solid black;
+}
