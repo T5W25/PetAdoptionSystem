@@ -3,9 +3,12 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Head from 'next/head';
-import styles from './login.module.css'; 
+import styles from './login.module.css';
+import { useUser } from '../../context/UserContext'; 
+
 export default function Login() {
     const router = useRouter();
+    const { setUserId } = useUser(); 
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const [formData, setFormData] = useState({ email: '', password: '' });
@@ -29,14 +32,25 @@ export default function Login() {
 
             const data = await response.json();
             if (!response.ok) throw new Error(data.message || 'Login failed');
-            router.push('/');
-            window.alert('Login successful!');
+
+            // save to context
+            setUserId(data.user.id);
+
+            console.log("login page", data.user.id);
+
+            if (window.opener) {
+                window.opener.location.reload(); 
+                window.close(); 
+            } else {
+                router.push('/');
+            }
         } catch (err) {
             setError(err instanceof Error ? err.message : 'An error occurred');
         } finally {
             setIsLoading(false);
         }
     };
+
 
     return (
         <>
