@@ -14,7 +14,7 @@ export async function middleware(req: NextRequest) {
     if (!accessToken) {
         return NextResponse.json({ message: "Authentication Failed" }, { status: 401 })
     }
-    
+
     console.log("MIDDLEWARE ACTIVE")
     //this will clone the headers and set the Authorization header
     const headers = new Headers(req.headers);
@@ -62,7 +62,7 @@ async function getAccessToken() {
         const data = await response.json();
         accessToken = data.access_token;
         tokenExpiration = Date.now() + data.expires_in * 1000;
-
+        console.log("Access Token", accessToken);
         console.log("NEW TOKEN GENERATED");
 
     } catch (error) {

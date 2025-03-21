@@ -1,16 +1,16 @@
 .navbar {
-    height: 100%;
-    width: 300px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    border-right: 2px solid #b3ffcc;
-    background-color: #fdfdfd;
+	height: 100%;
+	width: 300px;
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	border-right: 2px solid #b3ffcc;
+	background-color: #fdfdfd;
 	position: fixed;
 }
 
 .navbarMain {
-  	flex: 1;
+	flex: 1;
 }
 
 .header {
@@ -23,8 +23,8 @@
 }
 
 .footer {
-	padding-top: 20px;
-	margin-top: 20px;
+	padding-top: 10px;
+	margin-top: 10px;
 	border-top: 2px solid #b3ffcc;
 }
 
@@ -41,7 +41,7 @@
 
 	&:hover {
 		background-color: #f0f0f0;
-		color: #000; 
+		color: #000;
 
 		.linkIcon {
 			color: #000;
@@ -51,8 +51,8 @@
 	&[data-active] {
 		&,
 		&:hover {
-			background-color: #b3ffcc; 
-			color: #000; 
+			background-color: #b3ffcc;
+			color: #000;
 
 			.linkIcon {
 				color: #000;
@@ -62,8 +62,63 @@
 }
 
 .linkIcon {
-	color: #333333; 
-	margin-right: 8px; 
+	color: #333333;
+	margin-right: 8px;
 	width: 25px;
 	height: 25px;
+}
+
+.userCard {
+	background-color: #fff;
+	padding: 15px;
+	border-radius: 10px;
+	margin-bottom: 15px;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	width: 100%;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.emailText {
+	font-size: 14px;
+	color: #333;
+	margin-bottom: 8px;
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	font-weight: 600;
+	width: 100%;
+	text-align: left;
+	position: relative;
+	padding-left: 2px;
+}
+
+.userBadge {
+	font-size: 12px;
+	padding: 5px 10px;
+	border-radius: 8px;
+	text-transform: uppercase;
+	font-weight: 600;
+	margin-bottom: 12px;
+	align-self: flex-start;
+	background-color: #e6f7ff;
+	color: #0066cc;
+	border: 1px solid #b3d9ff;
+}
+
+.logoutButton {
+	margin-top: 12px;
+	font-weight: 600;
+	background-color: #fff;
+	border: 1px solid #ddd6d6;
+	color: #2eb1b6;
+	width: 100%;
+	text-align: left;
+	justify-content: flex-start;
+	padding: 8px 12px;
+}
+
+.logoutButton:hover {
+	background-color: #ffeeee;
 }
