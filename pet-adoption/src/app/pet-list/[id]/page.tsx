@@ -50,10 +50,49 @@ const PageDetails: React.FC = () => {
 
     // process adoption
     const handleAdopt = () => {
-        console.log(`Adopting ${pet?.name}`);
-        alert(`Adoption process started for ${pet?.name}`);
-        fetch(`/api/adopt/${id}`, { method: "POST" });
+        if (!pet) {
+            alert("Pet data is missing.");
+            return;
+        }
+
+        const userId = localStorage.getItem("userId");
+        if (!userId) {
+            alert("User ID not found. Please log in first.");
+            return;
+        }
+
+        const requestData = {
+            userId: parseInt(userId, 10),
+            petId: parseInt(id, 10),
+        };
+
+        console.log(`Adopting ${pet.name} with request:`, requestData);
+
+        fetch(`/api/adopt/${id}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(requestData),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.error) {
+                    if (data.error.includes("already exists")) {
+                        alert(`You have already adopted ${pet.name}.`);
+                    } else {
+                        alert(`Failed to adopt ${pet.name}: ${data.error}`);
+                    }
+                } else {
+                    alert(`Adoption process started for ${pet.name}! 🎉`);
+                }
+            })
+            .catch((error) => {
+                console.error("Error adopting pet:", error);
+                alert("An error occurred while starting the adoption process.");
+            });
     };
+
 
     // process save to the favorite
     const handleFavorite = () => {

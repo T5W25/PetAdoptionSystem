@@ -86,18 +86,20 @@ model VolunteerProfile {
 }
 
 model Pet {
-  id           Int      @id @default(autoincrement())
-  name         String
-  age          String
-  gender       String
-  species      String
-  primaryBreed String
-  url          String
-  photoUrl     String?
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id             Int      @id
+  name           String
+  age            String
+  gender         String
+  species        String
+  primaryBreed   String
+  secondaryBreed String?
+  mixed          Boolean  @default(false)
+  url            String
+  photoUrl       String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 
   // References
-  userId Int // Owner or lister of the pet
-  user   User @relation(fields: [userId], references: [id])
+  userId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
