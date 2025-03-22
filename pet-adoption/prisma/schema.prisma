@@ -35,6 +35,8 @@ model User {
 
   // Pet relations
   petListings Pet[] // For donors listing pets
+
+  favoritePetIds Int[] @default([])
 }
 
 model AdopterProfile {

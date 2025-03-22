@@ -9,7 +9,8 @@ import {
   IconLogin2,
   IconUserEdit,
   IconDogBowl,
-  IconLogout
+  IconLogout,
+  IconHeart
 } from '@tabler/icons-react';
 import { Code, Group, Button, Text, Card, Badge} from '@mantine/core';
 import classes from './Navbar.module.css';
@@ -18,7 +19,8 @@ import { useEffect, useState } from 'react';
 const navItems = [
   { href: '/', label: 'Home', icon: IconHome },
   { href: '/about', label: 'About', icon: IconVocabulary },
-  { href: '/shelters', label: 'Shelters', icon: IconDogBowl }
+  { href: '/shelters', label: 'Shelters', icon: IconDogBowl },
+  { href: '/favorite', label: 'Favorite', icon: IconHeart}
 ];
 
 export default function Navbar({ userID }: { userID: string| null }) {
