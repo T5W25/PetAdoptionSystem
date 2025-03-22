@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 
 const prisma = new PrismaClient();
 
-const SECRET_KEY = process.env.JWT_SECRET || 'your-secret-key'; // Set in .env
+const SECRET_KEY = process.env.JWT_SECRET || 'your-secret-key';
 
 export async function POST(req: NextRequest) {
     const url = new URL(req.url);
@@ -46,31 +46,30 @@ export async function POST(req: NextRequest) {
             }
 
             const hashedPassword = await bcrypt.hash(password, 10);
-            const normalizedUserType = userType.toUpperCase();
 
             const userData = {
                 email,
                 password: hashedPassword,
                 name,
-                userType: normalizedUserType,
+                userType, 
             };
 
             const user = await prisma.user.create({
                 data: {
                     ...userData,
-                    ...(normalizedUserType === 'ADOPTER' && location && {
+                    ...(userType === 'ADOPTER' && location && {
                         adopterProfile: { create: { location } },
                     }),
-                    ...(normalizedUserType === 'DONOR' && contact && {
+                    ...(userType === 'DONOR' && contact && {
                         donorProfile: { create: { contact } },
                     }),
-                    ...(normalizedUserType === 'FOSTER' && address && {
+                    ...(userType === 'FOSTER' && address && {
                         fosterProfile: { create: { address } },
                     }),
-                    ...(normalizedUserType === 'SHELTER' && shelterName && {
+                    ...(userType === 'SHELTER' && shelterName && {
                         shelterStaffProfile: { create: { shelterName } },
                     }),
-                    ...(normalizedUserType === 'VOLUNTEER' && interests && {
+                    ...(userType === 'VOLUNTEER' && interests && {
                         volunteerProfile: { create: { interests } },
                     }),
                 },
