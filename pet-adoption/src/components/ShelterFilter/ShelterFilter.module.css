@@ -1,8 +1,7 @@
 .filter {
     display: flex;
     justify-content: center;
-    gap: 10px;
-    margin: 20px 0;
+    gap: 17px;
   }
   
   .select, .label {

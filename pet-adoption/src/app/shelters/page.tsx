@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import ShelterSearchBar from '../../components/ShelterSearchBar/ShelterSearchBar';
 import ShelterFilter from '../../components/ShelterFilter/ShelterFilter';
 import ShelterDetails from '../../components/ShelterDetails/ShelterDetails';
-//import styles from './page.module.css';
+import styles from './page.module.css';
 
 const ShelterSearchPage = () => {
   //const [shelters, setShelters] = useState([]);
@@ -67,9 +67,11 @@ const shelters= [
   };
 
   return (
-    <div >
-      <ShelterSearchBar onSearch={handleSearch} />
-      <ShelterFilter onFilter={handleFilter} />
+    <div>
+      <div className={styles.searchContainer}>
+        <ShelterSearchBar onSearch={handleSearch} />
+        <ShelterFilter onFilter={handleFilter} />
+      </div>
       <ShelterDetails shelters={shelters} />
     </div>
   );

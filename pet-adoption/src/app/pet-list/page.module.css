@@ -1,0 +1,61 @@
+.card {
+    background-color: rgb(255, 255, 255);
+    border: 4px solid #b3ffcc;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.image {
+    height: 320px;
+    width: 100%;
+    border-radius: 10px 10px 0 0;
+}
+
+.group {
+    display: flex;
+    justify-content: start;
+    gap: 10px;
+    align-items: center;
+    margin: 8px 0;
+}
+
+.badge {
+    background-color: #D3D3D3;
+    padding: 7px;
+    border-radius: 5px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-left: 15px;
+}
+
+.button {
+    background-color: #b3ffcc;
+    border: none;
+    border-radius: 0 0 5px 5px;
+    padding: 7px 10px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    text-decoration: none;
+    color: black;
+    height: 100%;
+}
+
+.button:hover {
+    background-color: #68f868;
+    text-decoration: none;
+    color: black;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
