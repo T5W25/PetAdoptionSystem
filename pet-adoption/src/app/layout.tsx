@@ -1,9 +1,12 @@
-import type { Metadata } from "next";
+"use client";
+
+import { usePathname } from "next/navigation";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { MantineProvider } from "@mantine/core";
-import Navbar from '../components/Navbar/Navbar';
-import Footer from '../components/Footer';
+import Navbar from "../components/Navbar/Navbar";
+import Footer from "../components/Footer";
+import { UserProvider, useUser } from './context/UserContext'; 
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -15,26 +18,29 @@ const geistMono = Geist_Mono({
     subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-    title: "Pet Adoption System",
-    description: "Web application for pet adoption",
-};
+function LayoutContent({ children }: { children: React.ReactNode }) {
+    const pathname = usePathname();
+    const isAuthPage = pathname.startsWith("/auth");
+    const { userId } = useUser(); 
 
-export default function RootLayout({
-                                       children,
-                                   }: {
-    children: React.ReactNode;
-}) {
+    return (
+        <MantineProvider>
+            {!isAuthPage && <Navbar userID={userId ?? ""} />}
+            <main style={{ paddingLeft: isAuthPage ? "0" : "300px" }}>
+                {children}
+            </main>
+            {!isAuthPage && <Footer />}
+        </MantineProvider>
+    );
+}
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="en">
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <MantineProvider>
-            <Navbar />
-                <main>
-                    {children}
-                </main>
-            <Footer />
-        </MantineProvider>
+        <UserProvider>
+            <LayoutContent>{children}</LayoutContent>
+        </UserProvider>
         </body>
         </html>
     );

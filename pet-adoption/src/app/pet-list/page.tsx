@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import {  Image, Text, Badge, Group, Card } from '@mantine/core';
+import { useRouter } from 'next/navigation';
 import styles from './page.module.css';
 
 interface Pet {
@@ -16,13 +17,15 @@ interface Pet {
 }
 
 export default function PetList() {
+  const router = useRouter();
+
   const [pets, setPets] = useState<Pet[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     async function fetchPets() {
       try {
-        const response = await fetch('/api/pet-list'); 
+        const response = await fetch('/api/pet-list');
         const data = await response.json();
         console.log('API Response:', data); // Debug the API response
 
@@ -91,11 +94,12 @@ export default function PetList() {
             </ul>
           </Group>
 
-          <Group className={styles.center}>
-            <a href={pet.url} target="_blank" className={styles.button}>
-              View Profile
-            </a>
-          </Group>
+          <Text size="sm" color="dimmed">{pet.breeds.primary} - {pet.gender}</Text>
+          <Text size="sm" mt="xs">Species: {pet.species}</Text>
+
+          <button onClick={() => router.push(`/pet-list/${pet.id}`)} className={styles.button}>
+            View Profile
+          </button>
         </Card>
       ))}
     </div>
