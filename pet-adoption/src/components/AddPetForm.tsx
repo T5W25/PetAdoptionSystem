@@ -25,17 +25,36 @@ const AddPetForm: React.FC = () => {
     });
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    console.log('Pet submitted:', pet);
-    alert('Pet added!');
-    setPet({
-      name: '',
-      age: '',
-      breed: '',
-      description: '',
-      image: ''
-    });
+
+    try {
+      const res = await fetch('/api/pets', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(pet),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        alert('Pet added successfully!');
+        console.log(data);
+        setPet({
+          name: '',
+          age: '',
+          breed: '',
+          description: '',
+          image: ''
+        });
+      } else {
+        const error = await res.json();
+        alert(`Error: ${error.error}`);
+      }
+    } catch (err) {
+      alert('Failed to connect to API');
+    }
   };
 
   return (

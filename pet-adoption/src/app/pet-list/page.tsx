@@ -1,61 +1,67 @@
-'use client';
+'use client'; 
 
-import { useEffect, useState } from 'react';
-import { Card, Image, Text, Badge, Group, Button } from '@mantine/core';
+import React, { useEffect, useState } from 'react';
 
-interface Pet {
+type Pet = {
   id: number;
   name: string;
-  age: string;
-  gender: string;
-  species: string;
-  breeds: { primary: string };
-  url: string;
-  primary_photo_cropped?: { small: string } | null;
-}
+  age: number;
+  breed: string;
+  description: string;
+  image: string;
+};
 
-export default function PetList() {
+export default function PetListPage() {
   const [pets, setPets] = useState<Pet[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    async function fetchPets() {
-      try {
-        const response = await fetch('/api/pet-list'); // Ensure you have this API route
-        const data = await response.json();
-        console.log(data);
-        setPets(data.animals);
-      } catch (error) {
-        console.error('Error fetching pets:', error);
-      } finally {
-        setLoading(false);
-      }
-    }
     fetchPets();
   }, []);
 
-  if (loading) return <Text>Loading...</Text>;
+  const fetchPets = async () => {
+    const res = await fetch('/api/pets');
+    const data = await res.json();
+    setPets(data);
+  };
+
+  const deletePet = async (id: number) => {
+    const res = await fetch(`/api/pets/${id}`, {
+      method: 'DELETE',
+    });
+
+    if (res.ok) {
+      alert('Pet deleted!');
+      fetchPets(); // Refresh the list
+    } else {
+      alert('Failed to delete pet');
+    }
+  };
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px', padding: '20px' }}>
+    <div className="p-6">
+      <h1 className="text-2xl font-bold mb-4">Shelter Pets</h1>
       {pets.map((pet) => (
-        <Card key={pet.id} shadow="sm" padding="lg" radius="md" withBorder>
-          <Card.Section>
-            <Image src={pet.primary_photo_cropped?.small || '/pet-placeholder.png'} height={160} alt={pet.name} />
-          </Card.Section>
-
-          <Group mt="md" mb="xs">
-            <Text w={500}>{pet.name}</Text>
-            <Badge color="blue">{pet.age}</Badge>
-          </Group>
-
-          <Text size="sm" color="dimmed">{pet.breeds.primary} - {pet.gender}</Text>
-          <Text size="sm" mt="xs">Species: {pet.species}</Text>
-
-          <Button component="a" href={pet.url} target="_blank" fullWidth mt="md" radius="md">
-            View Profile
-          </Button>
-        </Card>
+        <div key={pet.id} className="border p-4 rounded mb-4 shadow">
+          <h2 className="text-lg font-semibold">{pet.name}</h2>
+          <p>Breed: {pet.breed}</p>
+          <p>Age: {pet.age}</p>
+          <p>{pet.description}</p>
+          {pet.image && <img src={pet.image} alt={pet.name} className="w-40 mt-2" />}
+          <div className="mt-2 space-x-2">
+            <button
+              onClick={() => alert('Redirect to update form')}
+              className="bg-yellow-500 text-white px-3 py-1 rounded"
+            >
+              Edit
+            </button>
+            <button
+              onClick={() => deletePet(pet.id)}
+              className="bg-red-600 text-white px-3 py-1 rounded"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
       ))}
     </div>
   );
