@@ -26,7 +26,7 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
     return (
         <MantineProvider>
             {!isAuthPage && <Navbar userID={userId ?? ""} />}
-            <main style={{ paddingLeft: isAuthPage ? "0" : "300px" }}>
+            <main>
                 {children}
             </main>
             {!isAuthPage && <Footer />}

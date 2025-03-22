@@ -18,7 +18,7 @@ import { useEffect, useState } from 'react';
 const navItems = [
   { href: '/', label: 'Home', icon: IconHome },
   { href: '/about', label: 'About', icon: IconVocabulary },
-  { link: '/shelters', label: 'Shelters', icon: IconDogBowl }
+  { href: '/shelters', label: 'Shelters', icon: IconDogBowl }
 ];
 
 export default function Navbar({ userID }: { userID: string| null }) {

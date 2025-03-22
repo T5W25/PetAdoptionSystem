@@ -61,6 +61,7 @@ export default function PetList() {
                 style={{ backgroundColor: 
                   pet.species === 'Dog' ? '#ffa654' : 
                   pet.species === 'Cat' ? '#b88dfd' : 
+                  pet.species === 'Rabbit' ? '#e2e2e2' :
                   '#D3D3D3' 
                 }}
               >
