@@ -1,12 +1,20 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 
+
 export async function POST(req: Request) {
     try {
         const { userId, recipientEmail, subject, message } = await req.json();
 
-        if (!userId || !recipientEmail || !subject || !message) {
-            return NextResponse.json({ error: "Missing fields" }, { status: 400 });
+        const parsedUserId = Number(userId); 
+
+        if (
+            isNaN(parsedUserId) ||  
+            typeof recipientEmail !== "string" ||
+            typeof subject !== "string" ||
+            typeof message !== "string"
+        ) {
+            return NextResponse.json({ error: "Invalid or missing fields" }, { status: 400 });
         }
 
         const transporter = nodemailer.createTransport({
@@ -20,7 +28,7 @@ export async function POST(req: Request) {
         const mailOptions = {
             from: process.env.EMAIL_USER,
             to: recipientEmail,
-            subject: `User ${userId}: ${subject}`,
+            subject: `User ${parsedUserId}: ${subject}`,
             text: message,
         };
 
@@ -28,6 +36,7 @@ export async function POST(req: Request) {
 
         return NextResponse.json({ message: "Email sent successfully" }, { status: 200 });
     } catch (error) {
+        console.error("Error sending email:", error);
         return NextResponse.json({ error: "Error sending email" }, { status: 500 });
     }
 }
