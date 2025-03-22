@@ -1,5 +1,4 @@
 import { PropsWithChildren } from "react"
-import "./styles.css"
 
 
 interface CardProps extends PropsWithChildren {

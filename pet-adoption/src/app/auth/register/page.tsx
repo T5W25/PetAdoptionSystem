@@ -3,13 +3,12 @@ import styles from './register.module.css';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-
 const USER_TYPES = [
-    { id: 'adopter', name: 'Adopter', description: 'Looking to adopt a pet' },
-    { id: 'donor', name: 'Pet Donor', description: 'Want to find a home for a pet' },
-    { id: 'foster', name: 'Foster Caregiver', description: 'Provide temporary care for pets' },
-    { id: 'shelter', name: 'Shelter Staff', description: 'Manage shelter pets and applications' },
-    { id: 'volunteer', name: 'Volunteer', description: 'Help with events and activities' }
+    { id: 'ADOPTER', name: 'Adopter', description: 'Looking to adopt a pet' },
+    { id: 'DONOR', name: 'Pet Donor', description: 'Want to find a home for a pet' },
+    { id: 'FOSTER', name: 'Foster Caregiver', description: 'Provide temporary care for pets' },
+    { id: 'SHELTER', name: 'Shelter Staff', description: 'Manage shelter pets and applications' },
+    { id: 'VOLUNTEER', name: 'Volunteer', description: 'Help with events and activities' }
 ];
 
 export default function Register() {
@@ -20,11 +19,12 @@ export default function Register() {
         name: '',
         email: '',
         password: '',
-        userType: 'adopter',
-        contact: '',
-        address: '',
-        shelterName: '',
-        interests: ''
+        userType: 'ADOPTER',
+        location: '',       
+        contact: '',        
+        address: '',        
+        shelterName: '',    
+        interests: ''      
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -39,23 +39,12 @@ export default function Register() {
         e.preventDefault();
         setIsLoading(true);
         setError('');
-        
-        // display different form base on the user type
-        const filteredData = {
-            name: formData.name,
-            email: formData.email,
-            password: formData.password,
-            userType: formData.userType,
-            ...(formData.userType === 'donor' || formData.userType === 'foster' ? { contact: formData.contact } : {}),
-            ...(formData.userType === 'shelter' ? { shelterName: formData.shelterName, address: formData.address } : {}),
-            ...(formData.userType === 'volunteer' ? { interests: formData.interests } : {})
-        };
 
         try {
             const response = await fetch('/api/user-operation/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(filteredData),
+                body: JSON.stringify(formData),
             });
 
             const data = await response.json();
@@ -88,25 +77,33 @@ export default function Register() {
                 <input type="password" name="password" placeholder="Password" value={formData.password}
                        onChange={handleChange} required className={styles.input}/>
 
-                {formData.userType === 'donor' || formData.userType === 'foster' ? (
+                {formData.userType === 'ADOPTER' && (
+                    <input type="text" name="location" placeholder="Your Location" value={formData.location}
+                           onChange={handleChange} required className={styles.input}/>
+                )}
+
+                {formData.userType === 'DONOR' && (
                     <input type="text" name="contact" placeholder="Contact Info" value={formData.contact}
                            onChange={handleChange} required className={styles.input}/>
-                ) : null}
+                )}
 
-                {formData.userType === 'shelter' ? (
+                {formData.userType === 'FOSTER' && (
+                    <input type="text" name="address" placeholder="Your Address" value={formData.address}
+                           onChange={handleChange} required className={styles.input}/>
+                )}
+
+                {formData.userType === 'SHELTER' && (
                     <>
                         <input type="text" name="shelterName" placeholder="Shelter Name"
                                value={formData.shelterName} onChange={handleChange} required
                                className={styles.input}/>
-                        <input type="text" name="address" placeholder="Shelter Address" value={formData.address}
-                               onChange={handleChange} required className={styles.input}/>
                     </>
-                ) : null}
+                )}
 
-                {formData.userType === 'volunteer' ? (
+                {formData.userType === 'VOLUNTEER' && (
                     <textarea name="interests" placeholder="Your Interests" value={formData.interests}
                               onChange={handleChange} required className={styles.textarea}/>
-                ) : null}
+                )}
 
                 <button type="submit" disabled={isLoading} className={styles.button}>
                     {isLoading ? 'Registering...' : 'Register'}

@@ -1,40 +1,46 @@
+'use client'
 import React, { useState } from 'react';
 import styles from './ShelterFilter.module.css';
 
 interface ShelterFilterProps {
-  onFilter: (filters: { location?: string; isVerified?: boolean }) => void;
+  onFilter: (filters: { isVerified?: boolean }) => void;
 }
 
 const ShelterFilter: React.FC<ShelterFilterProps> = ({ onFilter }) => {
-  const [location, setLocation] = useState('');
-  const [isVerified, setIsVerified] = useState(false);
+  const [isVerified, setIsVerified] = useState<boolean | undefined>(undefined);
 
-  const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setLocation(e.target.value);
-    onFilter({ location: e.target.value, isVerified });
-  };
+  const handleVerificationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value;
+    let verificationStatus: boolean | undefined;
 
-  const handleVerificationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsVerified(e.target.checked);
-    onFilter({ location, isVerified: e.target.checked });
+    if (value === 'verified') {
+      verificationStatus = true;
+    } else if (value === 'unverified') {
+      verificationStatus = false;
+    } else {
+      verificationStatus = undefined;
+    }
+
+    setIsVerified(verificationStatus);
+    onFilter({ isVerified: verificationStatus });
   };
 
   return (
-    <div className={styles.filter}>
-      <select value={location} onChange={handleLocationChange}className={styles.select}>
-        <option value="">All Locations</option>
-        <option value="City A">City A</option>
-        <option value="City B">City B</option>
-      </select>
-      <label className={styles.label}>
-        <input
-          type="checkbox"
-          checked={isVerified}
-          onChange={handleVerificationChange}
-        />
-        Show Verified Shelters Only
-      </label>
-    </div>
+      <div className={styles.filterContainer}>
+        <label htmlFor="verification-filter" className={styles.filterLabel}>
+          Verification Status:
+        </label>
+        <select
+            id="verification-filter"
+            onChange={handleVerificationChange}
+            className={styles.filterSelect}
+            value={isVerified === undefined ? 'all' : isVerified ? 'verified' : 'unverified'}
+        >
+          <option value="all">All Shelters</option>
+          <option value="verified">Verified Only</option>
+          <option value="unverified">Unverified Only</option>
+        </select>
+      </div>
   );
 };
 

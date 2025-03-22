@@ -9,8 +9,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-seed = "prisma/seed.ts"
-
 enum UserType {
   ADOPTER
   DONOR
@@ -88,12 +86,12 @@ model VolunteerProfile {
 model Pet {
   id           Int      @id @default(autoincrement())
   name         String
-  age          String // Age can be in various formats like "Baby", "Young", "Adult"
-  gender       String // Male, Female
-  species      String // Dog, Cat, etc.
-  primaryBreed String // Primary breed
-  url          String // URL for the pet's profile page
-  photoUrl     String? // URL for the pet's small photo
+  age          String
+  gender       String
+  species      String
+  primaryBreed String
+  url          String
+  photoUrl     String?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
