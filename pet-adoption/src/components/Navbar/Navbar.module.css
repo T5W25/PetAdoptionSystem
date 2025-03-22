@@ -7,6 +7,7 @@
 	border-right: 2px solid #b3ffcc;
 	background-color: #fdfdfd;
 	position: fixed;
+	margin: 0;
 }
 
 .navbarMain {
@@ -14,7 +15,7 @@
 }
 
 .header {
-	margin-bottom: 40px;
+	margin-bottom: 20px;
 	padding-bottom: 10px;
 	border-bottom: 2px solid #b3ffcc;
 	display: flex;
