@@ -20,10 +20,10 @@ import { useEffect, useState } from 'react';
 
 const navItems = [
   { href: '/', label: 'Home', icon: IconHome },
-  { href: '/about', label: 'About', icon: IconVocabulary },
   { href: '/shelters', label: 'Shelters', icon: IconDogBowl },
   { href: '/favorite', label: 'Favorite', icon: IconHeart},
   { href: '/adoption', label: 'Adoption', icon: IconPaw },
+  { href: '/about', label: 'About', icon: IconVocabulary },
 ];
 
 export default function Navbar({ userID }: { userID: string| null }) {
