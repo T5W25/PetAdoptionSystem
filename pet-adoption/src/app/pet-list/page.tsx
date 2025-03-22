@@ -95,9 +95,6 @@ export default function PetList() {
             </ul>
           </Group>
 
-          <Text size="sm" color="dimmed">{pet.breeds.primary} - {pet.gender}</Text>
-          <Text size="sm" mt="xs">Species: {pet.species}</Text>
-
           <button onClick={() => router.push(`/pet-list/${pet.id}`)} className={styles.button}>
             View Profile
           </button>

@@ -42,6 +42,7 @@
     cursor: pointer;
     display: flex;
     justify-content: center;
+    align-items: center;
     width: 100%;
     text-decoration: none;
     color: black;
