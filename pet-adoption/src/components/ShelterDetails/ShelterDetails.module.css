@@ -1,0 +1,24 @@
+.shelterList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .shelterItem {
+    border: 3px solid #b3ffcc;
+    padding: 15px;
+    border-radius: 8px;
+  }
+
+.shelterItem {
+    padding: 10px;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    cursor: pointer; 
+    transition: background-color 0.3s ease;
+}
+
+.shelterItem:hover {
+    background-color: #f0f0f0; 
+}

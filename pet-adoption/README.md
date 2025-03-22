@@ -26,14 +26,16 @@ Now that you are on the project directory, run the following commands (Run them 
 - npm i 
     - (This is to install node-modules required for the project)
 
-- npx prisma db push 
-    - (This is to push the DB to the server)
-
 - npx prisma generate 
     - (we use prisma for our DB)
 
 - openssl rand -base64 32
     - （generate your JWT secret)
+
+- generate a google app pass for mailing feature: https://myaccount.google.com/apppasswords
+    - set it in the `.env` file
+
+
 # Environment Variables
 
 Create a new file called `.env` in the root directory of the project and copy the following content: 
@@ -43,6 +45,8 @@ DATABASE_URL='postgresql://neondb_owner:npg_arNhxA8mFIQ0@ep-curly-darkness-a81ar
 API_KEY=zrIlC3PXwyRflWWrzr5DspswYINSmAMq8Z0sVOD00hgo93fJzJ
 API_SECRET=f1Y4cMVbi1CHhBaS1CQ2BjMmrWNO9BOWxVqHIowq
 JWT_SECRET='your jwt secret'
+EMAIL_USER=yourgmail@gmail.com
+EMAIL_PASS='xxxx xxxx xxxx xxxx'
 ```
 
 
