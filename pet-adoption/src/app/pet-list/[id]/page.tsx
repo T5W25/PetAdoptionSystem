@@ -4,7 +4,7 @@ import { useParams } from "next/navigation";
 import Card from "./components/Card/Card"
 
 import "./styles.css";
-import { Fragment, use, useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 
 
 interface Pet {
@@ -47,7 +47,7 @@ const PageDetails: React.FC = () => {
     return (
         <div className="pet-details">
             <Card className="pet-image__card">
-                <img src={pet?.photo || ""} alt={`${pet?.name}_${pet?.id} `} />
+                {pet?.photo && <img src={pet.photo} alt={`${pet?.name}_${pet?.id}`} />}
             </Card>
 
             <div className="pet-details__info">
