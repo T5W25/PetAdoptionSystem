@@ -86,8 +86,8 @@ export default function PetListPage() {
               </ul>
             </Group>
 
-            <button onClick={() => router.push(`/pet-list/${pet.id}`)} className={styles.button}>
-              View Profile
+            <button onClick={() => router.push(`/pet-details/${pet.id}`)} className={styles.button}>
+            View Profile
             </button>
           </Card>
         ))}

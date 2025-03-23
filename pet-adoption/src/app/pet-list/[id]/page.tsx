@@ -1,6 +1,6 @@
 'use client';
 
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Card from "./components/Card/Card";
 import "./styles.css";
 import { Fragment, useEffect, useState } from "react";
@@ -31,24 +31,23 @@ type SaveFavoritePetRequest = {
 
 const PageDetails: React.FC = () => {
     const params = useParams();
-    const id = params?.id as string; // Explicitly cast to string
+    const id = params?.id ?? ""; // Ensure id is always a string
+    const router = useRouter();
     const [pet, setPet] = useState<Pet | undefined>(undefined);
 
-    // Move useEffect to the top level, outside of any conditional blocks
     useEffect(() => {
-        if (!id) return; // Early return inside the effect instead of outside
+        if (!id) return; // Early return if no ID
 
         fetch(`/api/pet-list/${id}`)
             .then((res) => res.json())
             .then((data) => setPet(data));
     }, [id]);
 
-    // Show loading or error state when no ID is present
     if (!id) {
         return <div>Missing ID</div>;
     }
 
-    // process adoption
+    // Process adoption
     const handleAdopt = () => {
         if (!pet) {
             alert("Pet data is missing.");
@@ -63,16 +62,14 @@ const PageDetails: React.FC = () => {
 
         const requestData = {
             userId: parseInt(userId, 10),
-            petId: parseInt(id, 10),
+            petId: parseInt(userId, 10),
         };
 
         console.log(`Adopting ${pet.name} with request:`, requestData);
 
         fetch(`/api/adopt/${id}`, {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(requestData),
         })
             .then((res) => res.json())
@@ -93,8 +90,7 @@ const PageDetails: React.FC = () => {
             });
     };
 
-
-    // process save to the favorite
+    // Process save to favorite
     const handleFavorite = () => {
         const userId = localStorage.getItem("userId");
         if (!userId) {
@@ -104,7 +100,7 @@ const PageDetails: React.FC = () => {
 
         const requestData: SaveFavoritePetRequest = {
             userId: parseInt(userId, 10),
-            petId: parseInt(id, 10), // Explicitly convert string to number
+            petId: parseInt(userId, 10),
         };
 
         console.log(`Favoriting ${pet?.name} with request:`, requestData);
@@ -175,7 +171,11 @@ const PageDetails: React.FC = () => {
             <Card className="pet-adoption__card">
                 <div className="pet-adoption__card__content">
                     <p>{`Considering ${pet?.name || ""} for adoption?`}</p>
-                    <button>START YOUR INQUIRY</button>
+                    {id && (
+                        <button onClick={() => router.push(`/adoption/${id}`)}>
+                            START YOUR INQUIRY
+                        </button>
+                    )}
                 </div>
 
                 <div className="pet-adoption__card__buttons">
