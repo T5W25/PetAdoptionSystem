@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 
 export default function AboutPage() {
     return (
@@ -10,12 +11,12 @@ export default function AboutPage() {
                     Whether you’re looking for a furry companion or want to support pet welfare, we’re here to connect you with adorable pets in need.
                 </p>
                 <div className="mt-6">
-                    <a
+                    <Link
                         href="/"
                         className="bg-blue-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-600 transition"
                     >
                         Browse Pets
-                    </a>
+                    </Link>
                 </div>
             </div>
         </div>
