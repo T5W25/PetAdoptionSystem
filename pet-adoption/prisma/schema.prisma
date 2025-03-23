@@ -43,9 +43,13 @@ model AdopterProfile {
   id       Int    @id @default(autoincrement())
   location String
 
-  // References
+  // References to User
   userId Int  @unique
   user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // References to ShelterStaffProfile
+  shelterStaffId Int?
+  shelterStaff   ShelterStaffProfile? @relation(fields: [shelterStaffId], references: [id], onDelete: SetNull)
 }
 
 model DonorProfile {
@@ -61,9 +65,13 @@ model FosterProfile {
   id      Int    @id @default(autoincrement())
   address String
 
-  // References
+  // References to User
   userId Int  @unique
   user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Reference to ShelterStaffProfile
+  shelterStaffId Int?
+  shelterStaff   ShelterStaffProfile? @relation(fields: [shelterStaffId], references: [id], onDelete: SetNull)
 }
 
 model ShelterStaffProfile {
@@ -71,9 +79,15 @@ model ShelterStaffProfile {
   shelterName String
   isVerified  Boolean @default(false)
 
-  // References
+  // References to User
   userId Int  @unique
   user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // One-to-Many with FosterProfile
+  fosterProfiles FosterProfile[]
+
+  // One-to-Many with AdopterProfile
+  adopters AdopterProfile[]
 }
 
 model VolunteerProfile {
