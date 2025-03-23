@@ -18,7 +18,7 @@ interface Shelter {
 const ShelterSearchPage = () => {
     const [shelters, setShelters] = useState<Shelter[]>([]);
     const [filters, setFilters] = useState<{ isVerified?: boolean }>({});
-    const [searchTerm, setSearchTerm] = useState<string>(''); // 添加 searchTerm
+    const [searchTerm, setSearchTerm] = useState<string>(''); 
 
     useEffect(() => {
         fetchShelters();

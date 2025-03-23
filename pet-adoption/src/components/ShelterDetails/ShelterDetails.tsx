@@ -40,14 +40,15 @@ const ShelterDetails: React.FC<ShelterDetailsProps> = ({ shelters }) => {
             </div>
         ))}
 
-        {selectedEmail && (
+        {selectedShelter !== null && selectedEmail && (
             <div className={styles.contactFormContainer}>
               <h4>Contact the Shelter:</h4>
-              <ContactForm email={selectedEmail} />
+              <ContactForm email={selectedEmail} shelterId={selectedShelter} />
             </div>
         )}
       </div>
   );
+
 };
 
 export default ShelterDetails;

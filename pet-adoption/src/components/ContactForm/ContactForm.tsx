@@ -4,9 +4,10 @@ import { useState, useEffect } from "react";
 
 interface ContactFormProps {
     email: string; // target email
+    shelterId: number;
 }
 
-const ContactForm: React.FC<ContactFormProps> = ({ email }) => {
+const ContactForm: React.FC<ContactFormProps> = ({ email, shelterId }) => {
     const [userId, setUserId] = useState<string | null>(null);
     const [message, setMessage] = useState("");
     const [subject, setSubject] = useState("");
@@ -33,19 +34,33 @@ const ContactForm: React.FC<ContactFormProps> = ({ email }) => {
         };
 
         try {
-            const response = await fetch("/api/sendEmail", {
+            const emailResponse = await fetch("/api/sendEmail", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData),
             });
 
-            if (response.ok) {
-                setStatus("Email sent successfully!");
-            } else {
+            if (!emailResponse.ok) {
                 setStatus("Failed to send email.");
+                return;
+            }
+
+            const adopterToShelterResponse = await fetch("/api/adopter-to-shelter", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    adopterId: Number(userId),
+                    shelterStaffId: shelterId, 
+                }),
+            });
+
+            if (adopterToShelterResponse.ok) {
+                setStatus("Email sent and connection recorded successfully!");
+            } else {
+                setStatus("Email sent, but failed to record connection.");
             }
         } catch (error) {
-            setStatus("Error sending email.");
+            setStatus("Error processing request.");
         }
     };
 

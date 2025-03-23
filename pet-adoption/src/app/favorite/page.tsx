@@ -37,18 +37,27 @@ export default function PetList() {
           setLoading(false);
           return;
         }
+
         const response = await fetch(`/api/saved-pets?userid=${userIdInt}`);
         const data = await response.json();
         console.log('API Response:', data);
-        setPets(data || []);
+
+        if (Array.isArray(data)) {
+          setPets(data);
+        } else {
+          console.error('Unexpected data format:', data);
+          setPets([]);
+        }
       } catch (error) {
         console.error('Error fetching pets:', error);
+        setPets([]);
       } finally {
         setLoading(false);
       }
     }
     fetchPets();
   }, []);
+
 
   if (loading) return <Text>Loading...</Text>;
   if (pets.length === 0) return <Text>No pets found.</Text>;
