@@ -8,7 +8,7 @@ export async function POST(req: Request) {
         const { fosterId, shelterStaffId } = await req.json();
 
         const fosterProfile = await prisma.fosterProfile.findUnique({
-            where: { id: fosterId },
+            where: { userId: fosterId },
         });
 
         if (!fosterProfile) {
@@ -24,7 +24,7 @@ export async function POST(req: Request) {
         }
 
         const updatedFosterProfile = await prisma.fosterProfile.update({
-            where: { id: fosterId },
+            where: { userId: fosterId },
             data: { shelterStaffId },
         });
 

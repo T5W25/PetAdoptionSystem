@@ -7,22 +7,39 @@ interface ContactFormProps {
     shelterId: number;
 }
 
+enum UserType {
+    ADOPTER = "ADOPTER",
+    DONOR = "DONOR",
+    FOSTER = "FOSTER",
+    SHELTER = "SHELTER",
+    VOLUNTEER = "VOLUNTEER",
+}
+
 const ContactForm: React.FC<ContactFormProps> = ({ email, shelterId }) => {
     const [userId, setUserId] = useState<string | null>(null);
+    const [userType, setUserType] = useState<UserType | null>(null);
     const [message, setMessage] = useState("");
     const [subject, setSubject] = useState("");
     const [status, setStatus] = useState<string | null>(null);
 
     useEffect(() => {
-        const storedUserId = localStorage.getItem("userId");
-        setUserId(storedUserId);
+        const storedUser = localStorage.getItem("user");
+        if (storedUser) {
+            const parsedUser = JSON.parse(storedUser);
+            setUserId(parsedUser.id.toString());
+            setUserType(parsedUser.userType as UserType);
+        }
     }, []);
+
+    if (userType !== UserType.ADOPTER && userType !== UserType.FOSTER) {
+        return null; 
+    }
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (!userId) {
-            setStatus("User ID not found.");
+        if (!userId || !userType) {
+            setStatus("User ID or type not found.");
             return;
         }
 
@@ -45,16 +62,28 @@ const ContactForm: React.FC<ContactFormProps> = ({ email, shelterId }) => {
                 return;
             }
 
-            const adopterToShelterResponse = await fetch("/api/adopter-to-shelter", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    adopterId: Number(userId),
-                    shelterStaffId: shelterId, 
-                }),
-            });
+            let connectionResponse;
+            if (userType === UserType.ADOPTER) {
+                connectionResponse = await fetch("/api/adopter-to-shelter", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        adopterId: Number(userId),
+                        shelterStaffId: shelterId,
+                    }),
+                });
+            } else if (userType === UserType.FOSTER) {
+                connectionResponse = await fetch("/api/foster-to-shelter", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        fosterId: Number(userId),
+                        shelterStaffId: shelterId,
+                    }),
+                });
+            }
 
-            if (adopterToShelterResponse.ok) {
+            if (connectionResponse?.ok) {
                 setStatus("Email sent and connection recorded successfully!");
             } else {
                 setStatus("Email sent, but failed to record connection.");
