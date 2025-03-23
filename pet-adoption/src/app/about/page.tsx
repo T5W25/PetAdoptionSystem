@@ -1,59 +1,23 @@
-"use client"
-import { useState } from 'react';
+"use client";
 
-export default function AboutPage(){
-
-    const [message, setMessage] = useState('');
-
-    const handleClick = async () => {
-        try {
-            const response = await fetch("/api/hello");
-            const data = await response.json();
-            console.log(data);
-            setMessage(data.message);
-            alert(`Response: ${data.message}`);
-        } catch (error) {
-            console.error("fetching errored",error);
-        }
-    }
-
-    const handleCreate = async () => {
-        try {
-            const exampleUser = {
-                email:"zzz@qwe.com",
-                name:"test a name"
-            };
-
-            const response = await fetch("/api/user-operation", {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(exampleUser),
-            })
-
-            const data = await response.json();
-            console.log(data.email);
-            alert(`Response: ${data.email}`);
-
-        } catch (error) {
-            console.error("post fetching errored",error);
-        }
-    }
-
+export default function AboutPage() {
     return (
-        <div>
-            <h1>About Page</h1>
-            <ol>
-                <li>
-                    <button onClick={handleClick}>Click me!</button>
-                </li>
-                <li>
-                    <button onClick={handleCreate}>create user</button>
-                </li>
-            </ol>
-
-
+        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-6">
+            <div className="bg-white shadow-lg rounded-2xl p-8 max-w-lg text-center">
+                <h1 className="text-3xl font-bold text-gray-800 mb-4">About Us</h1>
+                <p className="text-gray-600 text-lg">
+                    Welcome to our Pet Adoption website! Our mission is to help loving pets find their forever homes.
+                    Whether you’re looking for a furry companion or want to support pet welfare, we’re here to connect you with adorable pets in need.
+                </p>
+                <div className="mt-6">
+                    <a
+                        href="/"
+                        className="bg-blue-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-600 transition"
+                    >
+                        Browse Pets
+                    </a>
+                </div>
+            </div>
         </div>
-    )
+    );
 }
