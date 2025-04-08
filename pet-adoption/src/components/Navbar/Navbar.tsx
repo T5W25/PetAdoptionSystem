@@ -75,7 +75,6 @@ export default function Navbar({ userID }: { userID: string | null }) {
       }
     };
 
-
     fetchUser();
   }, [userID]);
 
@@ -85,12 +84,22 @@ export default function Navbar({ userID }: { userID: string | null }) {
     setUser(null);
   };
 
-  const filteredNavItems = navItems.filter(({ href }) => {
-    if (user?.userType === 'SHELTER' && href === '/favorite') return false;
-    if (user?.userType !== 'SHELTER' && href === '/staff') return false;
-    if (user?.userType === 'SHELTER' && href === '/adoption') return false;
+  let filteredNavItems = navItems.filter(({ href }) => {
+    if (user?.userType === 'SHELTER') {
+      if (['/shelters', '/favorite', '/adoption'].includes(href)) return false;
+    } else {
+      if (href === '/staff') return false;
+    }
     return true;
   });
+
+  // Add Management page for SHELTER users
+  if (user?.userType === 'SHELTER') {
+    filteredNavItems = [
+      ...filteredNavItems,
+      { href: '/management', label: 'Management', icon: IconUserEdit },
+    ];
+  }
 
   return (
       <nav className={classes.navbar}>
