@@ -3,10 +3,11 @@ import { NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 
-export async function POST(req: Request, { params }: { params: { action: string } }) {
+export async function POST(req: Request, context: { params: { action: string } }) {
+    const { action } = context.params;
     const { adopterId, shelterStaffId } = await req.json();
 
-    if (params.action === "link") {
+    if (action === "link") {
         try {
             const adopterProfile = await prisma.adopterProfile.findUnique({
                 where: { userId: adopterId },
@@ -41,10 +42,11 @@ export async function POST(req: Request, { params }: { params: { action: string 
     return NextResponse.json({ error: "Invalid action for POST" }, { status: 400 });
 }
 
-export async function DELETE(req: Request, { params }: { params: { action: string } }) {
+export async function DELETE(req: Request, context: { params: { action: string } }) {
+    const { action } = context.params;
     const { adopterId } = await req.json();
 
-    if (params.action === "unlink") {
+    if (action === "unlink") {
         try {
             const adopterProfile = await prisma.adopterProfile.findUnique({
                 where: { userId: adopterId },

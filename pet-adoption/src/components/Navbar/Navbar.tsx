@@ -96,8 +96,14 @@ export default function Navbar({ userID }: { userID: string | null }) {
     filteredNavItems = [
       ...filteredNavItems,
       { href: '/management', label: 'Management', icon: IconUserEdit },
+      {
+        href: `/staff/${user.id}`, 
+        label: 'Staff Management',
+        icon: IconUserEdit,
+      },
     ];
   }
+
 
   return (
       <nav className={classes.navbar}>
