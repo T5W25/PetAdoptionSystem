@@ -1,7 +1,7 @@
 # User Guide
 ## Contact Shelter for Pet Donation - Pet Donor
 
-**1.** Select shelters tab.
+**1.** Select "Shelters" tab.
 
 ![image](https://github.com/user-attachments/assets/914b9351-400c-4db0-bf27-bd728ec87deb)
 
