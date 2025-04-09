@@ -85,15 +85,13 @@ export default function Navbar({ userID }: { userID: string | null }) {
   };
 
   let filteredNavItems = navItems.filter(({ href }) => {
-    if (user?.userType === 'SHELTER') {
-      if (['/shelters', '/favorite', '/adoption'].includes(href)) return false;
-    } else {
-      if (href === '/staff') return false;
+    const hideForShelter = ['/shelters', '/favorite', '/adoption'];
+    if (user?.userType === 'SHELTER' && hideForShelter.includes(href)) {
+      return false;
     }
     return true;
   });
 
-  // Add Management page for SHELTER users
   if (user?.userType === 'SHELTER') {
     filteredNavItems = [
       ...filteredNavItems,
@@ -110,7 +108,12 @@ export default function Navbar({ userID }: { userID: string | null }) {
           </Group>
 
           {filteredNavItems.map(({ href, label, icon: Icon }) => (
-              <Link key={label} href={href} className={`${classes.link} ${pathname === href ? classes.active : ''}`} prefetch={false}>
+              <Link
+                  key={label}
+                  href={href}
+                  className={`${classes.link} ${pathname === href ? classes.active : ''}`}
+                  prefetch={false}
+              >
                 <Icon className={classes.linkIcon} stroke={1.5} />
                 <span>{label}</span>
               </Link>

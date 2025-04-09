@@ -64,7 +64,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ email, shelterId }) => {
 
             let connectionResponse;
             if (userType === UserType.ADOPTER) {
-                connectionResponse = await fetch("/api/adopter-to-shelter", {
+                connectionResponse = await fetch("/api/adopter-to-shelter/link", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
@@ -73,7 +73,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ email, shelterId }) => {
                     }),
                 });
             } else if (userType === UserType.FOSTER) {
-                connectionResponse = await fetch("/api/foster-to-shelter", {
+                connectionResponse = await fetch("/api/foster-to-shelter/link", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
@@ -94,7 +94,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ email, shelterId }) => {
     };
 
     return (
-        <div className="p-4 border rounded-md">
+        <>
             <h2 className="text-lg font-semibold mb-2">Contact Form</h2>
             <form onSubmit={handleSubmit} className="flex flex-col space-y-2">
                 <label className="text-sm">
@@ -121,7 +121,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ email, shelterId }) => {
                 </button>
             </form>
             {status && <p className="mt-2 text-sm">{status}</p>}
-        </div>
+        </>
     );
 };
 
