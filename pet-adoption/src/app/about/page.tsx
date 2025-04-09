@@ -18,6 +18,16 @@ export default function AboutPage() {
                         Browse Pets
                     </Link>
                 </div>
+                <div className="mt-6">
+                    <a
+                        href="https://buy.stripe.com/test_8wM4hNfIEdpDbSM000"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition"
+                    >
+                        Sponsor Me
+                    </a>
+                </div>
             </div>
         </div>
     );
