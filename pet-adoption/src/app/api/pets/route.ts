@@ -28,3 +28,25 @@
 //     return NextResponse.json({ error: 'Failed to add pet' }, { status: 500 });
 //   }
 // }
+import { NextResponse } from 'next/server';
+
+const pets = [
+  {
+    id: '1',
+    name: 'Buddy',
+    age: '2 years',
+    breed: 'Golden Retriever',
+    description: 'Friendly and active',
+  },
+  {
+    id: '2',
+    name: 'Luna',
+    age: '1 year',
+    breed: 'Siberian Husky',
+    description: 'Loves to play in the snow',
+  },
+];
+
+export async function GET() {
+  return NextResponse.json(pets);
+}
