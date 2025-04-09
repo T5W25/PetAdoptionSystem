@@ -18,6 +18,23 @@ interface AdopterProfile {
     shelterStaffId: number;
 }
 
+interface VolunteerProfile {
+    id: number;
+    interests: string;
+    userId: number;
+    shelterStaffId: number | null;
+}
+
+interface VeterinarianProfile {
+    id: number;
+    licenseNumber: string;
+    clinicName: string;
+    contactNumber: string;
+    specialization?: string;
+    userId: number;
+    shelterStaffId: number | null;
+}
+
 interface ShelterStaffProfile {
     id: number;
     shelterName: string;
@@ -25,6 +42,8 @@ interface ShelterStaffProfile {
     userId: number;
     fosterProfiles?: FosterProfile[];
     adopters?: AdopterProfile[];
+    volunteers?: VolunteerProfile[];
+    veterinarians?: VeterinarianProfile[];
 }
 
 export default function StaffProfilePage() {
@@ -136,6 +155,87 @@ export default function StaffProfilePage() {
                         </ul>
                     ) : (
                         <p>No adopter profiles.</p>
+                    )}
+
+                    <h3 className={styles.sectionTitle}>Volunteer Profiles:</h3>
+                    {profile.volunteers?.length ? (
+                        <ul className={styles.list}>
+                            {profile.volunteers.map((volunteer) => (
+                                <li key={volunteer.id}>
+                                    Interests: {volunteer.interests} (User ID: {volunteer.userId})
+                                    <button
+                                        onClick={async () => {
+                                            try {
+                                                const res = await fetch(`/api/volunteer-to-shelter/unlink`, {
+                                                    method: "DELETE",
+                                                    headers: { "Content-Type": "application/json" },
+                                                    body: JSON.stringify({ volunteerId: volunteer.userId }),
+                                                });
+
+                                                if (res.ok) {
+                                                    setProfile((prev) => ({
+                                                        ...prev!,
+                                                        volunteers: prev!.volunteers!.filter(v => v.id !== volunteer.id),
+                                                    }));
+                                                } else {
+                                                    console.error("Failed to unlink volunteer");
+                                                }
+                                            } catch (error) {
+                                                console.error("Error unlinking volunteer:", error);
+                                            }
+                                        }}
+                                        className={styles.deleteButton}
+                                    >
+                                        ❌ Unlink
+                                    </button>
+                                </li>
+                            ))}
+                        </ul>
+                    ) : (
+                        <p>No volunteer profiles.</p>
+                    )}
+
+                    <h3 className={styles.sectionTitle}>Veterinarian Profiles:</h3>
+                    {profile.veterinarians?.length ? (
+                        <ul className={styles.list}>
+                            {profile.veterinarians.map((vet) => (
+                                <li key={vet.id}>
+                                    <strong>{vet.clinicName}</strong> — License: {vet.licenseNumber}
+                                    <br />
+                                    Contact: {vet.contactNumber}
+                                    <br />
+                                    Specialization: {vet.specialization ?? "N/A"} (User ID: {vet.userId})
+                                    <br />
+                                    <button
+                                        onClick={async () => {
+                                            try {
+                                                const res = await fetch(`/api/vet-to-shelter/unlink`, {
+                                                    method: "DELETE",
+                                                    headers: { "Content-Type": "application/json" },
+                                                    body: JSON.stringify({ vetId: vet.userId }),
+                                                });
+
+                                                if (res.ok) {
+                                                    setProfile((prev) => ({
+                                                        ...prev!,
+                                                        veterinarians: prev!.veterinarians!.filter(v => v.id !== vet.id),
+                                                    }));
+                                                } else {
+                                                    console.error("Failed to unlink vet");
+                                                }
+                                            } catch (error) {
+                                                console.error("Error unlinking vet:", error);
+                                            }
+                                        }}
+                                        className={styles.deleteButton}
+                                    >
+                                        ❌ Unlink
+                                    </button>
+                                </li>
+                            ))}
+                        </ul>
+                    ) : (
+                        <p>No veterinarian profiles.</p>
                     )}
                 </div>
             )}

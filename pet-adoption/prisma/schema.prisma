@@ -75,6 +75,9 @@ model VeterinarianProfile {
 
   userId Int  @unique
   user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  shelterStaffId Int?
+  shelterStaff   ShelterStaffProfile? @relation(fields: [shelterStaffId], references: [id], onDelete: SetNull)
 }
 
 model AdoptionApplication {
@@ -131,6 +134,8 @@ model ShelterStaffProfile {
 
   fosterProfiles FosterProfile[]
   adopters       AdopterProfile[]
+  volunteers     VolunteerProfile[]
+  veterinarians  VeterinarianProfile[]
 }
 
 model VolunteerProfile {
@@ -139,4 +144,7 @@ model VolunteerProfile {
 
   userId Int  @unique
   user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  shelterStaffId Int?
+  shelterStaff   ShelterStaffProfile? @relation(fields: [shelterStaffId], references: [id], onDelete: SetNull)
 }

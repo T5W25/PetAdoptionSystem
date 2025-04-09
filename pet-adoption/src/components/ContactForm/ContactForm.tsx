@@ -13,6 +13,7 @@ enum UserType {
     FOSTER = "FOSTER",
     SHELTER = "SHELTER",
     VOLUNTEER = "VOLUNTEER",
+    VETERINARIAN = "VETERINARIAN",
 }
 
 const ContactForm: React.FC<ContactFormProps> = ({ email, shelterId }) => {
@@ -31,8 +32,13 @@ const ContactForm: React.FC<ContactFormProps> = ({ email, shelterId }) => {
         }
     }, []);
 
-    if (userType !== UserType.ADOPTER && userType !== UserType.FOSTER) {
-        return null; 
+    if (
+        userType !== UserType.ADOPTER &&
+        userType !== UserType.FOSTER &&
+        userType !== UserType.VOLUNTEER &&
+        userType !== UserType.VETERINARIAN
+    ) {
+        return null;
     }
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -63,24 +69,48 @@ const ContactForm: React.FC<ContactFormProps> = ({ email, shelterId }) => {
             }
 
             let connectionResponse;
-            if (userType === UserType.ADOPTER) {
-                connectionResponse = await fetch("/api/adopter-to-shelter/link", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        adopterId: Number(userId),
-                        shelterStaffId: shelterId,
-                    }),
-                });
-            } else if (userType === UserType.FOSTER) {
-                connectionResponse = await fetch("/api/foster-to-shelter/link", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        fosterId: Number(userId),
-                        shelterStaffId: shelterId,
-                    }),
-                });
+
+            switch (userType) {
+                case UserType.ADOPTER:
+                    connectionResponse = await fetch("/api/adopter-to-shelter/link", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            adopterId: Number(userId),
+                            shelterStaffId: shelterId,
+                        }),
+                    });
+                    break;
+                case UserType.FOSTER:
+                    connectionResponse = await fetch("/api/foster-to-shelter/link", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            fosterId: Number(userId),
+                            shelterStaffId: shelterId,
+                        }),
+                    });
+                    break;
+                case UserType.VOLUNTEER:
+                    connectionResponse = await fetch("/api/volunteer-to-shelter/link", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            volunteerId: Number(userId),
+                            shelterStaffId: shelterId,
+                        }),
+                    });
+                    break;
+                case UserType.VETERINARIAN:
+                    connectionResponse = await fetch("/api/vet-to-shelter/link", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            vetId: Number(userId),
+                            shelterStaffId: shelterId,
+                        }),
+                    });
+                    break;
             }
 
             if (connectionResponse?.ok) {

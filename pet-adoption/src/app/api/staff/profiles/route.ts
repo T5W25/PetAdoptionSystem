@@ -19,6 +19,8 @@ export async function GET(request: Request) {
                 include: {
                     fosterProfiles: true,
                     adopters: true,
+                    volunteers: true,
+                    veterinarians: true,
                 },
             });
 
@@ -31,6 +33,8 @@ export async function GET(request: Request) {
                     ...profile,
                     fosterProfiles: profile.fosterProfiles || [],
                     adopters: profile.adopters || [],
+                    volunteers: profile.volunteers || [],
+                    veterinarians: profile.veterinarians || [],
                 },
             });
         }
@@ -39,6 +43,8 @@ export async function GET(request: Request) {
             include: {
                 fosterProfiles: true,
                 adopters: true,
+                volunteers: true,
+                veterinarians: true,
             },
         });
 
@@ -46,6 +52,8 @@ export async function GET(request: Request) {
             ...profile,
             fosterProfiles: profile.fosterProfiles || [],
             adopters: profile.adopters || [],
+            volunteers: profile.volunteers || [],
+            veterinarians: profile.veterinarians || [],
         }));
 
         return NextResponse.json({ profiles: safeProfiles });
