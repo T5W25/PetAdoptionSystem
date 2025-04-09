@@ -17,7 +17,7 @@ interface Pet {
     url: string;
     photoUrl?: string;
     status?: 'PENDING' | 'APPROVED' | 'REJECTED';
-    userId?: number; // ✅ 添加 userId 字段
+    userId?: number; 
 }
 
 export default function PetList() {
@@ -38,7 +38,7 @@ export default function PetList() {
                         .map((application) => ({
                             ...application.pet,
                             status: application.status,
-                            userId: application.userId, // ✅ 提取 userId
+                            userId: application.userId, 
                         }))
                     : [];
 
