@@ -8,7 +8,8 @@ const USER_TYPES = [
     { id: 'DONOR', name: 'Pet Donor', description: 'Want to find a home for a pet' },
     { id: 'FOSTER', name: 'Foster Caregiver', description: 'Provide temporary care for pets' },
     { id: 'SHELTER', name: 'Shelter Staff', description: 'Manage shelter pets and applications' },
-    { id: 'VOLUNTEER', name: 'Volunteer', description: 'Help with events and activities' }
+    { id: 'VOLUNTEER', name: 'Volunteer', description: 'Help with events and activities' },
+    { id: 'VETERINARIAN', name: 'Veterinarian', description: 'Provide medical care to pets' }
 ];
 
 export default function Register() {
@@ -20,11 +21,15 @@ export default function Register() {
         email: '',
         password: '',
         userType: 'ADOPTER',
-        location: '',       
-        contact: '',        
-        address: '',        
-        shelterName: '',    
-        interests: ''      
+        location: '',
+        contact: '',
+        address: '',
+        shelterName: '',
+        interests: '',
+        licenseNumber: '',
+        clinicName: '',
+        contactNumber: '',
+        specialization: ''
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -63,8 +68,7 @@ export default function Register() {
             <h2 className={styles.title}>Create a new account</h2>
             {error && <p className={styles.errorMessage}>{error}</p>}
             <form className={styles.form} onSubmit={handleSubmit}>
-                <select name="userType" value={formData.userType} onChange={handleChange}
-                        className={styles.select}>
+                <select name="userType" value={formData.userType} onChange={handleChange} className={styles.select}>
                     {USER_TYPES.map(type => (
                         <option key={type.id} value={type.id}>{type.name} - {type.description}</option>
                     ))}
@@ -93,16 +97,31 @@ export default function Register() {
                 )}
 
                 {formData.userType === 'SHELTER' && (
-                    <>
-                        <input type="text" name="shelterName" placeholder="Shelter Name"
-                               value={formData.shelterName} onChange={handleChange} required
-                               className={styles.input}/>
-                    </>
+                    <input type="text" name="shelterName" placeholder="Shelter Name"
+                           value={formData.shelterName} onChange={handleChange} required
+                           className={styles.input}/>
                 )}
 
                 {formData.userType === 'VOLUNTEER' && (
                     <textarea name="interests" placeholder="Your Interests" value={formData.interests}
                               onChange={handleChange} required className={styles.textarea}/>
+                )}
+
+                {formData.userType === 'VETERINARIAN' && (
+                    <>
+                        <input type="text" name="licenseNumber" placeholder="License Number"
+                               value={formData.licenseNumber} onChange={handleChange} required
+                               className={styles.input}/>
+                        <input type="text" name="clinicName" placeholder="Clinic Name"
+                               value={formData.clinicName} onChange={handleChange} required
+                               className={styles.input}/>
+                        <input type="text" name="contactNumber" placeholder="Contact Number"
+                               value={formData.contactNumber} onChange={handleChange} required
+                               className={styles.input}/>
+                        <input type="text" name="specialization" placeholder="Specialization (Optional)"
+                               value={formData.specialization} onChange={handleChange}
+                               className={styles.input}/>
+                    </>
                 )}
 
                 <button type="submit" disabled={isLoading} className={styles.button}>

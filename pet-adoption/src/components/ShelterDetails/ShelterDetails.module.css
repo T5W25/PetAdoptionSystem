@@ -22,3 +22,49 @@
 .shelterItem:hover {
     background-color: #f0f0f0; 
 }
+.shelterList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    width: 300px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.selected {
+    border: 2px solid #0070f3;
+    box-shadow: 0 0 0 4px rgba(0, 112, 243, 0.2);
+}
+
+.cardContent h3 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-size: 1.25rem;
+    color: #333;
+}
+
+.cardContent p {
+    margin: 0.25rem 0;
+    color: #555;
+}
+
+.contactFormContainer {
+    margin-top: 2rem;
+    padding: 1rem;
+    border-top: 1px solid #ccc;
+}

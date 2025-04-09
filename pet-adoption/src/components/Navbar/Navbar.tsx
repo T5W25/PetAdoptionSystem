@@ -75,7 +75,6 @@ export default function Navbar({ userID }: { userID: string | null }) {
       }
     };
 
-
     fetchUser();
   }, [userID]);
 
@@ -85,12 +84,20 @@ export default function Navbar({ userID }: { userID: string | null }) {
     setUser(null);
   };
 
-  const filteredNavItems = navItems.filter(({ href }) => {
-    if (user?.userType === 'SHELTER' && href === '/favorite') return false;
-    if (user?.userType !== 'SHELTER' && href === '/staff') return false;
-    if (user?.userType === 'SHELTER' && href === '/adoption') return false;
+  let filteredNavItems = navItems.filter(({ href }) => {
+    const hideForShelter = ['/shelters', '/favorite', '/adoption'];
+    if (user?.userType === 'SHELTER' && hideForShelter.includes(href)) {
+      return false;
+    }
     return true;
   });
+
+  if (user?.userType === 'SHELTER') {
+    filteredNavItems = [
+      ...filteredNavItems,
+      { href: '/management', label: 'Management', icon: IconUserEdit },
+    ];
+  }
 
   return (
       <nav className={classes.navbar}>
@@ -101,7 +108,12 @@ export default function Navbar({ userID }: { userID: string | null }) {
           </Group>
 
           {filteredNavItems.map(({ href, label, icon: Icon }) => (
-              <Link key={label} href={href} className={`${classes.link} ${pathname === href ? classes.active : ''}`} prefetch={false}>
+              <Link
+                  key={label}
+                  href={href}
+                  className={`${classes.link} ${pathname === href ? classes.active : ''}`}
+                  prefetch={false}
+              >
                 <Icon className={classes.linkIcon} stroke={1.5} />
                 <span>{label}</span>
               </Link>
