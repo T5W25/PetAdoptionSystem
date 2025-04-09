@@ -12,7 +12,7 @@ import {
   IconLogout,
   IconHeart,
   IconPaw,
-  IconHeartHandshake
+  IconHeartHandshake,
 } from '@tabler/icons-react';
 import { Code, Group, Button, Text, Card, Badge } from '@mantine/core';
 import classes from './Navbar.module.css';
@@ -96,14 +96,16 @@ export default function Navbar({ userID }: { userID: string | null }) {
     filteredNavItems = [
       ...filteredNavItems,
       { href: '/management', label: 'Management', icon: IconUserEdit },
-      {
-        href: `/staff/${user.id}`, 
-        label: 'Staff Management',
-        icon: IconUserEdit,
-      },
+      { href: `/staff/${user.id}`, label: 'Staff Management', icon: IconUserEdit },
     ];
   }
 
+  // ✅ 排序：把 '/about' 放最后
+  filteredNavItems.sort((a, b) => {
+    if (a.href === '/about') return 1;
+    if (b.href === '/about') return -1;
+    return 0;
+  });
 
   return (
       <nav className={classes.navbar}>
