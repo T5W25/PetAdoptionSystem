@@ -21,7 +21,7 @@ export async function GET(req: NextRequest) {
         
         const petsWithStatus = applications.map((app) => ({
             ...app.pet,
-            status: app.status, // 把 status 合并进来
+            status: app.status, 
         }));
 
         return NextResponse.json(petsWithStatus);

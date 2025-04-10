@@ -104,28 +104,31 @@ const PageDetails: React.FC = () => {
 
         const requestData: SaveFavoritePetRequest = {
             userId: parseInt(userId, 10),
-            petId: parseInt(id, 10), // Explicitly convert string to number
+            petId: parseInt(id, 10),
         };
 
         console.log(`Favoriting ${pet?.name} with request:`, requestData);
 
-        fetch(`/api/favorite/${id}`, {
+        fetch(`/api/favorite`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(requestData),
-        }).then((res) => {
-            if (!res.ok) {
-                alert(`Successfully added ${pet?.name} to favorites!`);
-            } else {
-                alert(`Failed to add ${pet?.name} to favorites.`);
-            }
-        }).catch((error) => {
-            console.error("Error favoriting pet:", error);
-            alert("An error occurred while adding to favorites.");
-        });
+        })
+            .then((res) => {
+                if (res.ok) {
+                    alert(`Successfully added ${pet?.name} to favorites!`);
+                } else {
+                    alert(`Failed to add ${pet?.name} to favorites.`);
+                }
+            })
+            .catch((error) => {
+                console.error("Error favoriting pet:", error);
+                alert("An error occurred while adding to favorites.");
+            });
     };
+
 
     return (
         <div className="pet-details">
