@@ -47,7 +47,7 @@ model User {
 }
 
 model Pet {
-  id             Int      @id
+  id             Int      @id @default(autoincrement())
   name           String
   age            String
   gender         String
