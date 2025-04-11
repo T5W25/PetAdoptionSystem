@@ -47,7 +47,7 @@ model User {
 }
 
 model Pet {
-  id             Int      @id
+  id             Int      @id @default(autoincrement())
   name           String
   age            String
   gender         String
@@ -55,13 +55,14 @@ model Pet {
   primaryBreed   String
   secondaryBreed String?
   mixed          Boolean  @default(false)
-  url            String
+  url            String?
   photoUrl       String?
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
+  description    String?
 
-  userId Int
-  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int?
+  user   User? @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   adoptionApplications AdoptionApplication[]
 }
