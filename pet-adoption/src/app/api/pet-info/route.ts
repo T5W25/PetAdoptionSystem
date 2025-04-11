@@ -6,19 +6,27 @@ const prisma = new PrismaClient();
 export async function GET(req: NextRequest) {
     try {
         const { searchParams } = new URL(req.url);
-        const userId: number = Number(searchParams.get("userid"));
+        const userId = Number(searchParams.get("userid"));
 
         if (!userId) {
             return NextResponse.json({ error: "User ID is required" }, { status: 400 });
         }
 
-        const pets = await prisma.pet.findMany({
-            where: { userId: userId }
+        const applications = await prisma.adoptionApplication.findMany({
+            where: { userId },
+            include: {
+                pet: true,
+            },
         });
+        
+        const petsWithStatus = applications.map((app) => ({
+            ...app.pet,
+            status: app.status, 
+        }));
 
-        return NextResponse.json(pets);  // 直接返回数组，而不是 { pets: pets }
+        return NextResponse.json(petsWithStatus);
     } catch (error) {
-        console.error("Error fetching user's pets:", error);
+        console.error("Error fetching user's adoption applications:", error);
         return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
     }
 }

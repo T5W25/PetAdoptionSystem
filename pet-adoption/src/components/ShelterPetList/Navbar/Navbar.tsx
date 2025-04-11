@@ -12,7 +12,7 @@ import {
   IconLogout,
   IconHeart,
   IconPaw,
-  IconHeartHandshake
+  IconHeartHandshake,
 } from '@tabler/icons-react';
 import { Code, Group, Button, Text, Card, Badge } from '@mantine/core';
 import classes from './Navbar.module.css';
@@ -75,7 +75,6 @@ export default function Navbar({ userID }: { userID: string | null }) {
       }
     };
 
-
     fetchUser();
   }, [userID]);
 
@@ -85,11 +84,27 @@ export default function Navbar({ userID }: { userID: string | null }) {
     setUser(null);
   };
 
-  const filteredNavItems = navItems.filter(({ href }) => {
-    if (user?.userType === 'SHELTER' && href === '/favorite') return false;
-    if (user?.userType !== 'SHELTER' && href === '/staff') return false;
-    if (user?.userType === 'SHELTER' && href === '/adoption') return false;
+  let filteredNavItems = navItems.filter(({ href }) => {
+    const hideForShelter = ['/shelters', '/favorite', '/adoption'];
+    if (user?.userType === 'SHELTER' && hideForShelter.includes(href)) {
+      return false;
+    }
     return true;
+  });
+
+  if (user?.userType === 'SHELTER') {
+    filteredNavItems = [
+      ...filteredNavItems,
+      { href: '/management', label: 'Management', icon: IconUserEdit },
+      { href: `/staff/${user.id}`, label: 'Staff Management', icon: IconUserEdit },
+    ];
+  }
+
+  // ✅ 排序：把 '/about' 放最后
+  filteredNavItems.sort((a, b) => {
+    if (a.href === '/about') return 1;
+    if (b.href === '/about') return -1;
+    return 0;
   });
 
   return (
@@ -101,7 +116,12 @@ export default function Navbar({ userID }: { userID: string | null }) {
           </Group>
 
           {filteredNavItems.map(({ href, label, icon: Icon }) => (
-              <Link key={label} href={href} className={`${classes.link} ${pathname === href ? classes.active : ''}`} prefetch={false}>
+              <Link
+                  key={label}
+                  href={href}
+                  className={`${classes.link} ${pathname === href ? classes.active : ''}`}
+                  prefetch={false}
+              >
                 <Icon className={classes.linkIcon} stroke={1.5} />
                 <span>{label}</span>
               </Link>

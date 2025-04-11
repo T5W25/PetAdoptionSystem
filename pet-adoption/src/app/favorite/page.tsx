@@ -58,6 +58,37 @@ export default function PetList() {
     fetchPets();
   }, []);
 
+  const handleDeleteFavorite = async (petId: number) => {
+    const userId = localStorage.getItem('userId');
+    if (!userId) {
+      alert("User ID not found. Please log in.");
+      return;
+    }
+
+    try {
+      const res = await fetch("/api/favorite", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: parseInt(userId, 10),
+          petId,
+        }),
+      });
+
+      if (res.ok) {
+        alert("Removed from favorites!");
+        setPets((prev) => prev.filter((p) => p.id !== petId)); // 更新页面
+      } else {
+        const data = await res.json();
+        alert(`Failed to remove: ${data.error || "Unknown error"}`);
+      }
+    } catch (err) {
+      console.error("Delete error:", err);
+      alert("An error occurred while removing from favorites.");
+    }
+  };
 
   if (loading) return <Text>Loading...</Text>;
   if (pets.length === 0) return <Text>No pets found.</Text>;
@@ -114,6 +145,14 @@ export default function PetList() {
 
               <button onClick={() => router.push(`/pet-list/${pet.id}`)} className={styles.button}>
                 View Profile
+              </button>
+
+              <button
+                  onClick={() => handleDeleteFavorite(pet.id)}
+                  className={styles.button}
+                  style={{ backgroundColor: '#f44336', marginTop: '10px', color: 'white' }}
+              >
+                Remove Favorite
               </button>
             </Card>
         ))}

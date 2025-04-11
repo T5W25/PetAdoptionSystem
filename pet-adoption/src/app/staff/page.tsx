@@ -16,6 +16,23 @@ interface AdopterProfile {
     shelterStaffId: number;
 }
 
+interface VolunteerProfile {
+    id: number;
+    interests: string;
+    userId: number;
+    shelterStaffId: number | null;
+}
+
+interface VeterinarianProfile {
+    id: number;
+    licenseNumber: string;
+    clinicName: string;
+    contactNumber: string;
+    specialization?: string;
+    userId: number;
+    shelterStaffId: number | null;
+}
+
 interface ShelterStaffProfile {
     id: number;
     shelterName: string;
@@ -23,6 +40,8 @@ interface ShelterStaffProfile {
     userId: number;
     fosterProfiles?: FosterProfile[];
     adopters?: AdopterProfile[];
+    volunteers?: VolunteerProfile[];
+    veterinarians?: VeterinarianProfile[];
 }
 
 export default function StaffProfiles() {
@@ -53,10 +72,12 @@ export default function StaffProfiles() {
                             </h2>
 
                             <h3 className={styles.sectionTitle}>Foster Profiles:</h3>
-                            {profile.fosterProfiles && profile.fosterProfiles.length > 0 ? (
+                            {profile.fosterProfiles?.length ? (
                                 <ul className={styles.list}>
                                     {profile.fosterProfiles.map((foster) => (
-                                        <li key={foster.id}>{foster.address} (User ID: {foster.userId})</li>
+                                        <li key={foster.id}>
+                                            {foster.address} (User ID: {foster.userId})
+                                        </li>
                                     ))}
                                 </ul>
                             ) : (
@@ -64,14 +85,44 @@ export default function StaffProfiles() {
                             )}
 
                             <h3 className={styles.sectionTitle}>Adopter Profiles:</h3>
-                            {profile.adopters && profile.adopters.length > 0 ? (
+                            {profile.adopters?.length ? (
                                 <ul className={styles.list}>
                                     {profile.adopters.map((adopter) => (
-                                        <li key={adopter.id}>{adopter.location} (User ID: {adopter.userId})</li>
+                                        <li key={adopter.id}>
+                                            {adopter.location} (User ID: {adopter.userId})
+                                        </li>
                                     ))}
                                 </ul>
                             ) : (
                                 <p>No adopter profiles.</p>
+                            )}
+
+                            <h3 className={styles.sectionTitle}>Volunteer Profiles:</h3>
+                            {profile.volunteers?.length ? (
+                                <ul className={styles.list}>
+                                    {profile.volunteers.map((volunteer) => (
+                                        <li key={volunteer.id}>
+                                            Interests: {volunteer.interests} (User ID: {volunteer.userId})
+                                        </li>
+                                    ))}
+                                </ul>
+                            ) : (
+                                <p>No volunteer profiles.</p>
+                            )}
+
+                            <h3 className={styles.sectionTitle}>Veterinarian Profiles:</h3>
+                            {profile.veterinarians?.length ? (
+                                <ul className={styles.list}>
+                                    {profile.veterinarians.map((vet) => (
+                                        <li key={vet.id}>
+                                            <strong>{vet.clinicName}</strong> — License: {vet.licenseNumber}<br />
+                                            Contact: {vet.contactNumber}<br />
+                                            Specialization: {vet.specialization ?? "N/A"} (User ID: {vet.userId})
+                                        </li>
+                                    ))}
+                                </ul>
+                            ) : (
+                                <p>No veterinarian profiles.</p>
                             )}
                         </div>
                     ))}
