@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { MantineProvider } from "@mantine/core";
-import Navbar from "../components/Navbar/Navbar";
+import Navbar from "../components/ShelterPetList/Navbar/Navbar";
 import Footer from "../components/Footer";
 import { UserProvider, useUser } from './context/UserContext'; 
 

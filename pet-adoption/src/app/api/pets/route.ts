@@ -28,26 +28,3 @@
 //     return NextResponse.json({ error: 'Failed to add pet' }, { status: 500 });
 //   }
 // }
-import { NextResponse } from 'next/server';
-import prisma from '@/lib/prisma';
-
-export async function POST(request: Request) {
-  const { name, age, gender, species, breed, description } = await request.json();
-
-  try {
-    const newPet = await prisma.pet.create({
-      data: {
-        name,
-        age,
-        gender,
-        species,
-        primaryBreed: breed,
-        description,
-      },
-    });
-    return NextResponse.json(newPet);
-  } catch (error) {
-    console.error('Error adding pet:', error);
-    return NextResponse.json({ error: 'Failed to add pet' }, { status: 500 });
-  }
-}
